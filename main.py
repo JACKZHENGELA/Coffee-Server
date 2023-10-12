@@ -5,32 +5,48 @@ import uvicorn
 
 app = FastAPI()
 
-users = [
-    {"name": "Jack", "grade": 10},
-    {"name": "Hudson", "grade": 11},
-    {"name": "Nolan", "grade": 10},
+
+coffee_all = [
+    {"type": "cappuccino", "stock": 1, "ranking": 1},
+    {"type": "espresso", "stock": 2, "ranking": 5},
+    {"type": "caffè mocha", "stock": 3, "ranking": 3},
+    {"type": "latte", "stock": 4, "ranking": 1},
+    {"type": "americano", "stock": 5, "ranking": 2},
+    {"type": "flat white", "stock": 6, "ranking": 8},
+    {"type": "caffè macchiato", "stock": 7, "ranking": 1},
+    {"type": "cortado", "stock": 8, "ranking": 4},
+    {"type": "café au lait", "stock": 9, "ranking": 1},
+    {"type": "cold brew", "stock": 10, "ranking": 6},
+    {"type": "iced coffee", "stock": 11, "ranking": 8},
+    {"type": "irish coffee", "stock": 12, "ranking": 7},
+    {"type": "ristretto", "stock": 13, "ranking": 4},
+    {"type": "frappe", "stock": 14, "ranking": 1},
+    {"type": "doppio", "stock": 15, "ranking": 1},
+    {"type": "coffea arabica", "stock": 16, "ranking": 2},
+    {"type": "lungo", "stock": 17, "ranking": 4},
+    {"type": "red Eye", "stock": 18, "ranking": 3},
+    {"type": "long black", "stock": 19, "ranking": 1},
+    {"type": "black", "stock": 20, "ranking": 9},
 ]
 
-@app.get("/users/me")
-async def get_me():
-    return {"Me": "Jack"}
 
-@app.get("/users/{user_id}")
-async def get_profile(user_id: int):
-    if user_id < 0 or user_id > len(users) - 1:
-        return {"message": "User not found"}
-    user = users[user_id]
-    return {"data": user}
+@app.get("/coffee_stock/{coffee_kind}")
+async def get_profile(coffee_kind: str):
+    for coffee in coffee_all:
+        if coffee_kind.lower() == coffee["type"].lower():
+            return coffee
+    return {"msg": "Out of stock."}
 
-@app.get("/documents")
-async def get_document(name: str, age: int):
-    if name and age:
-        return {"name": name, "age": age}
-    return {"msg": "Got docs successfully"}
+@app.get("/coffee_ranking/{ranking}")
+async def get_coffee_list(ranking: int):
+    ranking_ls = []
+    for coffee in coffee_all:
+        if int(ranking) == coffee["ranking"]:
+            ranking_ls.append(coffee)
+    if ranking_ls != []:
+        return(ranking_ls)
+    return {"msg": "No coffee of this quality."}
 
-@app.get("/secret")
-async def get_secret():
-    return "Chemistry is shit."
 
 
 if __name__ == "__main__":
