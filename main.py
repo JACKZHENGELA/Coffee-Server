@@ -4,7 +4,7 @@ import uvicorn
 
 
 app = FastAPI()
-
+API_KEYS = ["071113", "a8kl7dfj"]
 
 coffee_all = [
     {"type": "cappuccino", "stock": 1, "ranking": 1},
@@ -31,21 +31,25 @@ coffee_all = [
 
 
 @app.get("/coffee_stock/{coffee_kind}")
-async def get_profile(coffee_kind: str):
-    for coffee in coffee_all:
-        if coffee_kind.lower() == coffee["type"].lower():
-            return coffee
-    return {"msg": "Out of stock."}
+async def get_profile(coffee_kind: str, api_key: str):
+    if api_key in API_KEYS:
+        for coffee in coffee_all:
+            if coffee_kind.lower() in coffee["type"].lower():
+                return coffee
+        return {"msg": "Out of stock."}
+    return {"msg": "Get outta here you don't have access"}
 
 @app.get("/coffee_ranking/{ranking}")
-async def get_coffee_list(ranking: int):
-    ranking_ls = []
-    for coffee in coffee_all:
-        if int(ranking) == coffee["ranking"]:
-            ranking_ls.append(coffee)
-    if ranking_ls != []:
-        return(ranking_ls)
-    return {"msg": "No coffee of this quality."}
+async def get_coffee_list(ranking: int, api_key: str):
+    if api_key in API_KEYS:
+        ranking_ls = []
+        for coffee in coffee_all:
+            if int(ranking) == coffee["ranking"]:
+                ranking_ls.append(coffee)
+        if ranking_ls != []:
+            return (ranking_ls)
+        return {"msg": "No coffee of this quality."}
+    return {"msg": "Get outta here you don't have access"}
 
 
 
