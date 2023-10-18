@@ -1,26 +1,24 @@
-# How to use
-## Route 1: Stock of coffee
-### Go to /coffee_stock/kind of coffee you want to get?api_key=your API KEY
-### For example, go to /coffee_stock/black?api_key=071113 (for black coffee)
-If you entered the correct API key:
-If the coffee is in stock, you will get a set of {"type": "name of coffee", "stock": how many in stock(is an int), "ranking": the ranking (is an int)}
-
-In this route, the first two datas would be useful.
-
-If no coffee in stock matches your request, you will get a response of: {"msg": "Out of stock."}
-
-You will get a response of: {"msg": "Get outta here you don't have access"}
-## Route 2: Ranking of coffee
-### Go to /coffee_ranking/ranking of coffee you want to get?api_key=your API KEY
-### For example, go to /coffee_stock/1?api_key=071113 (for 1 star quality)
-If you entered the correct API key:
-
-If any coffee in stock matches your request ranking expectations, you will get a list of all the sets of {"type": "name of coffee", "stock": how many in stock(is an int), "ranking": the ranking (is an int)} of coffee that matches your expectations.
-
-In this route, the first and third data would be useful, if the amount of stock is useful as well, it can be also included.
-
-If no coffee in stock matches your request, you will get a response of: {"msg": "No coffee of this quality."}
-
-If you entered the wrong API key:
-
-You will get a response of: {"msg": "Get outta here you don't have access"}
+# Coffee API
+### This API keeps track of all coffee stock and coffee rankings. You can use the API to find out whether or not a type of coffee is in stock and if so, how much, also, it can find out all the types of coffee at your desired ranking.
+In order to access these routes, you need to use an api key. For all requests, you can use the api key as a query paramter with the key and value pair of :
+```python
+API_KEYS = ["071113", "a8kl7dfj"]
+```
+### Get stock of coffee
+Example Path: 
+``````
+10.6.20.239/coffee_stock/black?api_key= {API_KEY}
+``````
+Result: 
+``````
+{"type":"long black","stock":19,"ranking":1}
+``````
+### Get ranking of coffee
+Example Path:
+``````
+10.6.20.239/coffee_ranking/1?api_key= {API_KEY}
+``````
+Result:
+``````
+[{"type":"cappuccino","stock":1,"ranking":1},{"type":"latte","stock":4,"ranking":1},{"type":"caff猫 macchiato","stock":7,"ranking":1},{"type":"caf茅 au lait","stock":9,"ranking":1},{"type":"frappe","stock":14,"ranking":1},{"type":"doppio","stock":15,"ranking":1},{"type":"long black","stock":19,"ranking":1}]
+``````
