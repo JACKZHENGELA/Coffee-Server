@@ -25,7 +25,7 @@ coffee_all = [
     {"type": "coffea arabica", "stock": 16, "ranking": 2},
     {"type": "lungo", "stock": 17, "ranking": 4},
     {"type": "red Eye", "stock": 18, "ranking": 3},
-    {"type": "long black", "stock": 19, "ranking": 1},
+    {"type": "long red", "stock": 19, "ranking": 1},
     {"type": "black", "stock": 20, "ranking": 9},
 ]
 
